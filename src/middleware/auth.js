@@ -13,7 +13,10 @@ const auth = (req, res, next) => {
       //Verify token
       try {
         const decode = jwt.verify(token, process.env.JWT_SECRET);
-
+        req.user = {
+          email: decode.email,
+          name: decode.name,
+        };
         next();
       } catch {
         return res.status(401).json({
